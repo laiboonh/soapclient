@@ -18,7 +18,7 @@ public class CountryClient extends WebServiceGatewaySupport {
 		log.info("Requesting country information for " + countryName);
 
 		GetCountryResponse response = (GetCountryResponse) getWebServiceTemplate()
-				.marshalSendAndReceive("http://localhost:8000/ws", request);
+				.marshalSendAndReceive("https://localhost:8443/ws", request);
 		return response;
 	}
 

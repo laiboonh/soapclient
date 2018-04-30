@@ -30,6 +30,7 @@ task genJaxb {
 
     doLast() {
         project.ant {
+
             taskdef name: "xjc", classname: "com.sun.tools.xjc.XJCTask",
                     classpath: configurations.jaxb.asPath
             mkdir(dir: sourcesDir)
@@ -41,7 +42,7 @@ task genJaxb {
                 produces(dir: sourcesDir, includes: "**/*.java")
             }
 
-            javac(destdir: classesDir, source: 1.8, target: 1.8, debug: true,
+            javac(includeantruntime: false, destdir: classesDir, source: 1.8, target: 1.8, debug: true,
                     debugLevel: "lines,vars,source",
                     classpath: configurations.jaxb.asPath) {
                 src(path: sourcesDir)
@@ -65,9 +66,8 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter")
     compile("org.springframework.ws:spring-ws-core")
     compile("org.springframework.ws:spring-ws-support")
+    jaxb("org.glassfish.jaxb:jaxb-xjc:2.2.11")
     compile(files(genJaxb.classesDir).builtBy(genJaxb))
-
-    jaxb "com.sun.xml.bind:jaxb-xjc:2.1.7"
 }
 
 bootJar {
